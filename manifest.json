@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "Lavaca Developer Tools",
+  "version": "0.1",
+  "description": "Helps in debugging Lavaca web applications",
+  "icons": {
+    "128": "src/img/icon-144x144.png"
+  },
+  "devtools_page": "src/html/index.html",
+  "options_page": "src/html/panel.html",
+  "background": {
+    "scripts": ["src/js/background.js"]
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": [
+      "node_modules/lavaca/src/js/libs/jquery-2.0.0.js",
+      "src/js/content_script.js"
+    ],
+    "run_at": "document_start"
+  }],
+  "web_accessible_resources": ["src/js/attach.js"]
+}

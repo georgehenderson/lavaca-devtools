@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <meta encoding="utf-8"/>
+    <link href="../css/styles.css" type="text/css" rel="stylesheet"/>
+    <script src="../js/libs/lavaca.js"></script>
+    <script src="../js/namespace.js"></script>
+    <script src="../js/panel.js"></script>
+  </head>
+  <body>
+    <div id="view-root"></div>
+    <script type="text/dust-template" data-name="home">
+      <h1>Views</h1>
+      <div class="view-tree">
+      {#viewTree}
+        <div class="view-item" id="{id}" data-distance="{distance}">{type}</div>
+      {/viewTree}
+      </div>
+      <div class="model-inspector">
+        <pre>{selectedModel|s}</pre>
+      </div>
+    </script>
+  </body>
+</html>

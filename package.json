@@ -1,0 +1,17 @@
+{
+  "name": "lavaca-dev-tools",
+  "version": "0.0.1",
+  "description": "A chrome devtools extension for debugging Lavaca apps",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "lavaca": "2.1.x"    
+  },
+  "devDependencies": {
+    "grunt": "0.4.1",
+    "grunt-amd-dist": "0.4.x",
+    "grunt-amd-test": "0.4.x",
+    "grunt-amd-check": "0.5.x"
+  },
+  "author": "George Henderson",
+  "license": "MIT"
+}
