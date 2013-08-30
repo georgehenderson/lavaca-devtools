@@ -6,6 +6,7 @@ Chrome DevTools extension for debugging Lavaca apps. This extension adds sidebar
 Installation
 
 - Clone the repository
+- run `npm install`
 - Visit chrome://extensions in chrome
 - Make sure Developer mode is checked
 - Click on 'Load unpacked extension...'
