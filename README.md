@@ -11,3 +11,13 @@ Installation
 - Click on 'Load unpacked extension...'
 - Choose the folder of the cloned repo
 - Close and re-open developer tools if it's already open
+
+## Sidebar
+![Panel](https://raw.github.com/georgehenderson/lavaca-devtools/master/src/img/sidebar.png)
+
+Exposes two variables to the console
+- `$view` The current view in the selected elements scope.
+- `$model` The current view's model in the selected elements scope.
+
+## Panel
+![Sidebar](https://raw.github.com/georgehenderson/lavaca-devtools/master/src/img/panel.png)
