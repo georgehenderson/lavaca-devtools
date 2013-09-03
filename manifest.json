@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Lavaca Developer Tools",
-  "version": "0.1",
+  "version": "0.0.2",
   "description": "Helps in debugging Lavaca web applications",
   "icons": {
     "128": "src/img/icon-144x144.png"

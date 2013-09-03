@@ -1,6 +1,6 @@
 {
   "name": "lavaca-dev-tools",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A chrome devtools extension for debugging Lavaca apps",
   "main": "Gruntfile.js",
   "dependencies": {
