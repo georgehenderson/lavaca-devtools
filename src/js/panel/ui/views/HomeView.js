@@ -2,10 +2,13 @@ define(function(require) {
   var PageView = require('lavaca/mvc/PageView');
   var debounce = require('mout/function/debounce');
   var $ = require('jquery');
+  var port = require('panel/net/port');
 
   var HomeView = PageView.extend(function() {
     PageView.apply(this, arguments);
     var modelUpdate = debounce(this.onModelUpdate, 100);
+    this.portMessageHandler = this.onPortMessage.bind(this);
+    port.onMessage.addListener(this.portMessageHandler);
     this.mapEvent({
       '.view-item': {
         click: this.onClickViewItem.bind(this)
@@ -23,14 +26,27 @@ define(function(require) {
       this.model.set('selectedModel', this.syntaxHighlight(json));
       this.redraw('.model-inspector');
     },
+    selectViewItem: function(el) {
+      el = $(el);
+      el.addClass('selected')
+        .siblings()
+          .removeClass('selected');
+      this.selectModel(el.attr('id'));
+    },
+    onPortMessage: function (msg) {
+      if (msg.action === 'getViews') {
+        this.model.clearModels();
+        this.model.add(msg.message.views);
+      }
+    },
     onModelUpdate: function() {
       this.redraw().then(function() {
-        this.selectModel($('.view-item').attr('id'));
+        this.selectViewItem($('.view-item'));
       }.bind(this));
     },
     onClickViewItem: function(e) {
       var el = $(e.currentTarget);
-      this.selectModel(el.attr('id'));
+      this.selectViewItem(el);
     },
     syntaxHighlight: function(json) {
       json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -48,7 +64,11 @@ define(function(require) {
           cls = 'null';
         }
         return '<span class="' + cls + '">' + match + '</span>';
-    });
+      });
+    },
+    dispose: function() {
+      port.onMessage.removeListener(this.portMessageHandler);
+      PageView.prototype.dispose.apply(this, arguments);
     }
   });
 

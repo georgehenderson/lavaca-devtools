@@ -47,16 +47,17 @@
     return views;
   };
 
-  var sendTree = function() {
+  var sendTree = function(action) {
     var obj = {
       views: getViewTree()
     };
-    sendMessage(obj);
+    sendMessage(action, obj);
   };
 
-  var sendMessage = function(message) {
+  var sendMessage = function(action, message) {
     var data = {
       message: message,
+      action: action,
       from: 'injected-script'
     };
     window.postMessage(data, '*');
@@ -70,7 +71,7 @@
     }
     if (data.from === 'content-script') {
       if (message.action === 'getViews') {
-        sendTree();
+        sendTree(message.action);
       }
     }
   });
