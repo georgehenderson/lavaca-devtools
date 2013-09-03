@@ -38,7 +38,7 @@
       var view = $(el).data('view');
       views.push({
         id: view.id,
-        model: typeof view.model.toObject === 'function' ? view.model.toObject() : view.model,
+        model: (view.model && typeof view.model.toObject === 'function') ? view.model.toObject() : view.model,
         template: view.template,
         type: view.constructor.name || 'View',
         parentView: view.parentView ? view.parentView.id : null
