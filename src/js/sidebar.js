@@ -1,29 +1,4 @@
 (function() {
-  var resolve = function(name, createIfNotExists, value) {
-    if (!name) {
-      return null;
-    }
-    name = name.split('/');
-    var last = window,
-        o = window,
-        i = -1,
-        segment;
-    while (segment = name[++i]) {
-      o = o[segment];
-      if (!o) {
-        if (createIfNotExists) {
-          o = last[segment] = value || {};
-        } else {
-          return null;
-        }
-      }
-      last = o;
-    }
-    return o;
-  };
-  for (prop in window.requireExports) {
-    resolve(prop, true, window.requireExports[prop]);
-  }
   var getViewProperties = function() {
     if (!(window.jQuery && $0)) {
       return {};
