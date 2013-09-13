@@ -1,9 +1,5 @@
 (function() {
 
-  // attach.js needs this url to get the other files
-  var url = chrome.extension.getURL('src/js/');
-  document.documentElement.setAttribute('lavaca-dev-path', url);
-
   // inject attach.js which can access existing JavaScript
   var s = document.createElement('script');
   s.src = chrome.extension.getURL('src/js/attach.js');

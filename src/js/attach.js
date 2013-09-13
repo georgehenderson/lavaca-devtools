@@ -1,9 +1,18 @@
 (function() {
-
-  var htmlTag = document.documentElement;
-
-  var baseUrl = htmlTag.getAttribute('lavaca-dev-path');
-  htmlTag.removeAttribute('lavaca-dev-path');
+  var timer = setTimeout(function () {
+    document.removeEventListener('DOMNodeInserted', checkForLavaca);
+  }, 5000);
+  var checkForLavaca = function() {
+    if (window.require && window.require.defined && window.require.defined('lavaca/mvc/Application')) {
+      clearTimeout(timer);
+      document.removeEventListener('DOMNodeInserted', checkForLavaca);
+      init();
+    }
+  };
+  document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMNodeInserted', checkForLavaca);
+    checkForLavaca();
+  });
 
   var debounce = function(fn, threshold, isAsap){
     var timeout, result;
@@ -25,12 +34,6 @@
     }
     return debounced;
   };
-
-  // a simple security check
-  if (!/^chrome-extension:\/\/\w+\/src\/js\/$/.test(baseUrl)) {
-    console.error('[Lavaca Dev Tools] Incorrect extension URL');
-    return;
-  }
 
   var getViewTree = function() {
     var views = [];
@@ -63,20 +66,21 @@
     window.postMessage(data, '*');
   };
 
-  window.addEventListener('message', function(event) {
-    var data = event.data,
-        message;
-    if (data) {
-      message = data.message;
-    }
-    if (data.from === 'content-script') {
-      if (message.action === 'getViews') {
-        sendTree(message.action);
+  var init = function() {
+    console.log('[Lavaca Dev Tools] Started');
+    window.addEventListener('message', function(event) {
+      var data = event.data,
+          message;
+      if (data) {
+        message = data.message;
       }
-    }
-  });
+      if (data.from === 'content-script') {
+        if (message.action === 'getViews') {
+          sendTree(message.action);
+        }
+      }
+    });
 
-  document.addEventListener('DOMContentLoaded', function(event) {
     // create an observer instance
     var debouncedSendTree = debounce(sendTree, 200);
     var observer = new MutationObserver(function(mutations) {
@@ -88,8 +92,7 @@
     }, 1000);
     // later, you can stop observing
     //observer.disconnect();
-    
-  });
+  };
   
 
 })();
