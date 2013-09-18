@@ -39,13 +39,15 @@
     var views = [];
     $('[data-view-id]').each(function(i, el) {
       var view = $(el).data('view');
-      views.push({
-        id: view.id,
-        model: (view.model && typeof view.model.toObject === 'function') ? view.model.toObject() : view.model,
-        template: view.template,
-        type: view.constructor.name || 'View',
-        parentView: view.parentView ? view.parentView.id : null
-      });
+      if (view) {
+        views.push({
+          id: view.id,
+          model: (view.model && typeof view.model.toObject === 'function') ? view.model.toObject() : view.model,
+          template: view.template,
+          type: view.constructor.name || 'View',
+          parentView: view.parentView ? view.parentView.id : null
+        });
+      }
     });
     return views;
   };
