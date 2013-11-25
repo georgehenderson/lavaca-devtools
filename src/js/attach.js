@@ -56,7 +56,6 @@
     var obj = {
       views: getViewTree()
     };
-    console.log(obj);
     sendMessage(action, obj);
   };
 
