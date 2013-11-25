@@ -11,7 +11,9 @@ define(function(require) {
     port.onMessage.addListener(this.portMessageHandler);
     this.mapEvent({
       '.view-item': {
-        click: this.onClickViewItem.bind(this)
+        click: this.onClickViewItem.bind(this),
+        mouseover: this.onMouseOverItem.bind(this),
+        mouseout: this.onMouseOutItem.bind(this)
       },
       model: {
         'addItem': modelUpdate.bind(this)
@@ -47,6 +49,12 @@ define(function(require) {
     onClickViewItem: function(e) {
       var el = $(e.currentTarget);
       this.selectViewItem(el);
+    },
+    onMouseOverItem: function(e) {
+      port.postMessage({action: 'highlightView', viewId: $(e.currentTarget).attr('id')});
+    },
+    onMouseOutItem: function(e) {
+      port.postMessage({action: 'highlightView', viewId: null});
     },
     syntaxHighlight: function(json) {
       json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

@@ -18,6 +18,10 @@
     }
     var view = findView($0),
         data = { __proto__: null };
+    if (!view) {
+      var viewManager = require('lavaca/mvc/ViewManager');
+      view = viewManager.layers[viewManager.layers.length - 1];
+    }
     if (view && view.model) {
       if (level > 0) { data.distance = level; }
       data.id = view.id;
@@ -51,6 +55,10 @@
     var view = findView($0),
         data = { __proto__: null },
         messages;
+    if (!view) {
+      var viewManager = require('lavaca/mvc/ViewManager');
+      view = viewManager.layers[viewManager.layers.length - 1];
+    }
     if (view && view.model) {
       messages = view.model.validate();
       data.toObject = view.model.toObject();

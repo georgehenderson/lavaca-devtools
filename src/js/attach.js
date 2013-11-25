@@ -3,7 +3,7 @@
     document.removeEventListener('DOMNodeInserted', checkForLavaca);
   }, 5000);
   var checkForLavaca = function() {
-    if (window.require && window.require.defined && window.require.defined('lavaca/mvc/Application')) {
+    if (window.require && window.require.defined && window.require.defined('lavaca/mvc/View')) {
       clearTimeout(timer);
       document.removeEventListener('DOMNodeInserted', checkForLavaca);
       init();
@@ -56,6 +56,7 @@
     var obj = {
       views: getViewTree()
     };
+    console.log(obj);
     sendMessage(action, obj);
   };
 
@@ -68,8 +69,36 @@
     window.postMessage(data, '*');
   };
 
+  var highlightView = function(viewId) {
+    if (viewId) {
+      $('[data-view-id="'+ viewId +'"]').addClass('ldt-highlight');
+    } else {
+      $('[data-view-id]').removeClass('ldt-highlight');
+    }
+  };
+
   var init = function() {
     console.log('[Lavaca Dev Tools] Started');
+    var View = require('lavaca/mvc/View'),
+        renderPageView = View.prototype.renderPageView,
+        render = View.prototype.render,
+        redraw = View.prototype.redraw;
+    var debouncedSendTree = debounce(sendTree, 1000);
+    View.prototype.renderPageView = function() {
+      return renderPageView.apply(this, arguments).then(function() {
+        debouncedSendTree('getViews');
+      });
+    };
+    View.prototype.render = function() {
+      return render.apply(this, arguments).then(function() {
+        debouncedSendTree('getViews');
+      });
+    };
+    View.prototype.redraw = function() {
+      return redraw.apply(this, arguments).then(function() {
+        debouncedSendTree('getViews');
+      });
+    };
     window.addEventListener('message', function(event) {
       var data = event.data,
           message;
@@ -79,21 +108,12 @@
       if (data.from === 'content-script') {
         if (message.action === 'getViews') {
           sendTree(message.action);
+        } else if (message.action === 'highlightView') {
+          highlightView(message.viewId);
         }
       }
     });
 
-    // create an observer instance
-    var debouncedSendTree = debounce(sendTree, 200);
-    var observer = new MutationObserver(function(mutations) {
-      debouncedSendTree();
-    });
-    var config = { attributes: true, childList: true, characterData: true, subtree: true };
-    setTimeout(function() {
-      observer.observe($('#view-root')[0], config);
-    }, 1000);
-    // later, you can stop observing
-    //observer.disconnect();
   };
   
 
