@@ -25,7 +25,10 @@ define(function(require) {
     selectModel: function(id) {
       var model = this.model.first({id: id}),
           json = JSON.stringify(model.get('model') || {}, undefined, 2);
-      this.model.set('selectedModel', this.syntaxHighlight(json));
+      this.model.set('selectedModel', {
+        model: model,
+        json: this.syntaxHighlight(json)
+      });
       this.redraw('.model-inspector');
     },
     selectViewItem: function(el) {
@@ -36,7 +39,9 @@ define(function(require) {
       this.selectModel(el.attr('id'));
     },
     onPortMessage: function (msg) {
-      if (msg.action === 'getViews') {
+      if (msg.action === 'activatePanel') {
+        this.model.set('active', msg.message);
+      } else if (msg.action === 'getViews') {
         this.model.clearModels();
         this.model.add(msg.message.views);
       }

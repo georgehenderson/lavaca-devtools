@@ -2,20 +2,46 @@
 <html>
   <head>
     <meta encoding="utf-8"/>
+    <link href="../components/bootstrap/dist/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+    <link href="../components/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" rel="stylesheet"/>
     <link href="../css/styles.css" type="text/css" rel="stylesheet"/>
   </head>
   <body>
+    <div id="nav-header"></div>
     <div id="view-root"></div>
+    <script type="text/dust-template" data-name="header">
+      <ul class="nav nav-tabs">
+        <li {@eq key="Views" value="{pageTitle}"}class="active"{/eq}><a href="/">Views</a></li>
+        <li {@eq key="Options" value="{pageTitle}"}class="active"{/eq}><a href="/options">Options</a></li>
+      </ul>
+    </script>
+    <script type="text/dust-template" data-name="options">
+      <div class="options">
+        <h4>App Namespace</h4>
+        <p>Set if debugging an optimized build. Value should match the exports option of amd-dist grunt config.</p>
+        <div class="input-group">
+          <input name="namespace" class="form-control" value="{namespace}">
+          <span class="input-group-btn">
+            <button class="btn btn-default submit" type="button">Submit</button>
+          </span>
+        </div>
+      </div>
+    </script>
     <script type="text/dust-template" data-name="home">
-      <h1>Views</h1>
+    {?active}
       <div class="view-tree">
+      <h2>View Tree</h2>
       {#viewTree}
         <div class="view-item" id="{id}" data-distance="{distance}">{type} <em>{id}</em></div>
       {/viewTree}
       </div>
       <div class="model-inspector">
-        <pre>{selectedModel|s}</pre>
+        <h2>{selectedModel.model.id} model</h2>
+        <pre>{selectedModel.json|s}</pre>
       </div>
+    {:else}
+      <p>No Lavaca application detected</p>
+    {/active}
     </script>
     <script data-main="../js/panel/boot.js" src="../components/requirejs/require.js"></script>
   </body>

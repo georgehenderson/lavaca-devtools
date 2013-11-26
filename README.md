@@ -17,8 +17,8 @@ Installation
 ![Panel](https://raw.github.com/georgehenderson/lavaca-devtools/master/src/img/sidebar.png)
 
 Exposes two variables to the console
-- `$view` The current view in the selected elements scope.
-- `$model` The current view's model in the selected elements scope.
+- `$view` The current view in the selected elements scope. Defaults to the view on the highest layer.
+- `$model` The current view's model in the selected elements scope. Defaults to the model of the view on the highest layer.
 
 ## Panel
 ![Sidebar](https://raw.github.com/georgehenderson/lavaca-devtools/master/src/img/panel.png)

@@ -1,9 +1,10 @@
 (function() {
+  var namespace = localStorage.getItem('ldt-namespace');
   var timer = setTimeout(function () {
     document.removeEventListener('DOMNodeInserted', checkForLavaca);
   }, 5000);
   var checkForLavaca = function() {
-    if (window.require && window.require.defined && window.require.defined('lavaca/mvc/View')) {
+    if (isLavacaApp()) {
       clearTimeout(timer);
       document.removeEventListener('DOMNodeInserted', checkForLavaca);
       init();
@@ -13,6 +14,11 @@
     document.addEventListener('DOMNodeInserted', checkForLavaca);
     checkForLavaca();
   });
+
+  var isLavacaApp = function() {
+    return !!((namespace && window[namespace] && window[namespace]['lavaca/mvc/View'])
+      || (window.require && window.require.defined && window.require.defined('lavaca/mvc/View')));
+  };
 
   var debounce = function(fn, threshold, isAsap){
     var timeout, result;
@@ -78,11 +84,17 @@
 
   var init = function() {
     console.log('[Lavaca Dev Tools] Started');
-    var View = require('lavaca/mvc/View'),
-        renderPageView = View.prototype.renderPageView,
+    sendMessage('activatePanel', true);
+    var View;
+    if (namespace && window[namespace]['lavaca/mvc/View']) {
+      View = window[namespace]['lavaca/mvc/View'];
+    } else if (require && require.defined && require.defined('lavaca/mvc/View')) {
+      View = require('lavaca/mvc/View');
+    }
+    var renderPageView = View.prototype.renderPageView,
         render = View.prototype.render,
-        redraw = View.prototype.redraw;
-    var debouncedSendTree = debounce(sendTree, 1000);
+        redraw = View.prototype.redraw,
+        debouncedSendTree = debounce(sendTree, 1000);
     View.prototype.renderPageView = function() {
       return renderPageView.apply(this, arguments).then(function() {
         debouncedSendTree('getViews');
@@ -98,22 +110,29 @@
         debouncedSendTree('getViews');
       });
     };
-    window.addEventListener('message', function(event) {
-      var data = event.data,
-          message;
-      if (data) {
-        message = data.message;
-      }
-      if (data.from === 'content-script') {
-        if (message.action === 'getViews') {
-          sendTree(message.action);
-        } else if (message.action === 'highlightView') {
-          highlightView(message.viewId);
-        }
-      }
-    });
 
   };
+
+  window.addEventListener('message', function(event) {
+    var data = event.data,
+        message;
+    if (data) {
+      message = data.message;
+    }
+    if (data.from === 'content-script') {
+      if (message.action === 'isPanelActive') {
+        sendMessage('activatePanel', isLavacaApp());
+      } else if (message.action === 'getViews') {
+        sendTree(message.action);
+      } else if (message.action === 'highlightView') {
+        highlightView(message.viewId);
+      } else if (message.action === 'setNamespace') {
+        localStorage.setItem('ldt-namespace', message.namespace);
+      } else if (message.action === 'getNamespace') {
+        sendMessage('setNamespace', localStorage.getItem('ldt-namespace'));
+      }
+    }
+  });
   
 
 })();

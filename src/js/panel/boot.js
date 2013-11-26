@@ -37,6 +37,7 @@ require.config({
     'dust-helpers': '../components/dustjs-linkedin-helpers/dist/dust-helpers-1.1.1',
     'rdust': '../components/require-dust/require-dust',
     'iScroll': '../components/iscroll/dist/iscroll-lite-min',
+    'bootstrap': '../components/bootstrap/dist/js/bootstrap',
     'lavaca': '../components/lavaca/src'
   },
   shim: {
@@ -55,6 +56,9 @@ require.config({
     },
     'dust-helpers': {
       deps: ['dust']
+    },
+    bootstrap: {
+      deps: ['$']
     }
   }
 });

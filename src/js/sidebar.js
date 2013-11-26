@@ -19,8 +19,16 @@
     var view = findView($0),
         data = { __proto__: null };
     if (!view) {
-      var viewManager = require('lavaca/mvc/ViewManager');
-      view = viewManager.layers[viewManager.layers.length - 1];
+      var namespace = localStorage.getItem('ldt-namespace'),
+          viewManager;
+      if (namespace && window[namespace]['lavaca/mvc/ViewManager']) {
+        viewManager = window[namespace]['lavaca/mvc/ViewManager'];
+      } else if (window.require && window.require.defined && window.require.defined('lavaca/mvc/ViewManager')) {
+        viewManager = window.require('lavaca/mvc/ViewManager');
+      }
+      if (viewManager) {
+        view = viewManager.layers[viewManager.layers.length - 1];
+      }
     }
     if (view && view.model) {
       if (level > 0) { data.distance = level; }
@@ -56,8 +64,16 @@
         data = { __proto__: null },
         messages;
     if (!view) {
-      var viewManager = require('lavaca/mvc/ViewManager');
-      view = viewManager.layers[viewManager.layers.length - 1];
+      var namespace = localStorage.getItem('ldt-namespace'),
+          viewManager;
+      if (namespace && window[namespace]['lavaca/mvc/ViewManager']) {
+        viewManager = window[namespace]['lavaca/mvc/ViewManager'];
+      } else if (window.require && window.require.defined && window.require.defined('lavaca/mvc/ViewManager')) {
+        viewManager = window.require('lavaca/mvc/ViewManager');
+      }
+      if (viewManager) {
+        view = viewManager.layers[viewManager.layers.length - 1];
+      }
     }
     if (view && view.model) {
       messages = view.model.validate();

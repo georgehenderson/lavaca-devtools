@@ -12,16 +12,25 @@ body {
   overflow: hidden;
   font-family: Helvetica, Arial, sans-serif
 }
-#view-root > .view {
+#nav-header {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
-  height: 100%;
+  height: 50px;
+  padding: 8px 16px 0;
+}
+#view-root > .view {
+  position: absolute;
+  left: 0;
+  top: 50px;
+  bottom: 0;
+  width: 100%;
 }
 #view-root > .view > .view-interior {
   min-width: 100%;
   min-height: 100%;
+  padding: 0 16px;
 }
 .overflow-scroll, .synthetic-scroll {
   position: absolute;
@@ -43,10 +52,12 @@ body {
   -webkit-transform: rotateY(0);
 }
 .view-tree, .model-inspector {
+  position: absolute;
+  top: 0;
   width: 50%;
-  max-height: 500px;
-  padding: 10px;
+  padding: 0 16px;
   overflow: scroll;
+  bottom: 0;
   float: left;
   -webkit-overflow-scrolling: touch;
   -moz-overflow-scrolling: touch;
@@ -59,9 +70,11 @@ h1 {
 }
 .view-tree {
   left: 0;
+  padding-right: 8px;
 }
 .model-inspector {
   right: 0;
+  padding-left: 8px;
 }
 .view-item {
   padding: 5px 5px;
