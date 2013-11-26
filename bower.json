@@ -1,0 +1,19 @@
+{
+  "name": "lavaca-devtools",
+  "version": "0.0.4",
+  "homepage": "http://getlavaca.com",
+  "authors": [
+    "George Henderson <george.henderson@mutualmobile.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lavaca": "latest"
+  }
+}

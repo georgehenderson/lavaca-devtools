@@ -10,16 +10,13 @@
       <h1>Views</h1>
       <div class="view-tree">
       {#viewTree}
-        <div class="view-item" id="{id}" data-distance="{distance}">{type}</div>
+        <div class="view-item" id="{id}" data-distance="{distance}">{type} <em>{id}</em></div>
       {/viewTree}
       </div>
       <div class="model-inspector">
         <pre>{selectedModel|s}</pre>
       </div>
     </script>
-    <script src="../js/libs/require.js"></script>
-    <script src="../js/requireConfig.js"></script>
-    <script src="../js/requireContent.js"></script>
-    <script src="../js/panel/boot.js"></script>
+    <script data-main="../js/panel/boot.js" src="../components/requirejs/require.js"></script>
   </body>
 </html>

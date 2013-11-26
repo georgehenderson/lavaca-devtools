@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Lavaca Developer Tools",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Helps in debugging Lavaca web applications",
   "icons": {
     "128": "src/img/icon-144x144.png"
@@ -15,7 +15,7 @@
   "content_scripts": [{
     "matches": ["<all_urls>"],
     "js": [
-      "node_modules/lavaca/src/js/libs/jquery-2.0.0.js",
+      "src/components/jquery/index.js",
       "src/js/content_script.js"
     ],
     "css": ["src/css/injected-styles.css"],
