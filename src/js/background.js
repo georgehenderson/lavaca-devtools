@@ -10,7 +10,12 @@ chrome.runtime.onConnect.addListener(function (port) {
           connections[message.tabId] = port;
           return;
         }
-        chrome.tabs.sendMessage(message.tabId, message);
+        chrome.tabs.query({
+          active: true,
+          currentWindow: true,
+        }, function (tabs) {
+         chrome.tabs.sendMessage(tabs[0].id, message);
+        });
     }
 
     // Listen to messages sent from the DevTools page
