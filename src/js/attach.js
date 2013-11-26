@@ -128,6 +128,7 @@
         highlightView(message.viewId);
       } else if (message.action === 'setNamespace') {
         localStorage.setItem('ldt-namespace', message.namespace);
+        window.location.reload(true);
       } else if (message.action === 'getNamespace') {
         sendMessage('setNamespace', localStorage.getItem('ldt-namespace'));
       }

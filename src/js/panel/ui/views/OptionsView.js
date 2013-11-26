@@ -7,8 +7,8 @@ define(function(require) {
     this.portMessageHandler = this.onPortMessage.bind(this);
     port.onMessage.addListener(this.portMessageHandler);
     this.mapEvent({
-      '.submit': {
-        click: this.onSubmitNamespace.bind(this)
+      '.options': {
+        submit: this.onSubmitNamespace.bind(this)
       }
     });
   }, {
@@ -20,7 +20,8 @@ define(function(require) {
         this.redraw();
       }
     },
-    onSubmitNamespace: function() {
+    onSubmitNamespace: function(e) {
+      e.preventDefault();
       var input = this.el.find('[name="namespace"]'),
           val = input.val();
       port.postMessage({action: 'setNamespace', namespace: val});
