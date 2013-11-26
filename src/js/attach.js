@@ -71,7 +71,7 @@
       action: action,
       from: 'injected-script'
     };
-    window.postMessage(JSON.stringify(data), '*');
+    window.postMessage(data, '*');
   };
 
   var highlightView = function(viewId) {
