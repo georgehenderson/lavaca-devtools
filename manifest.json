@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Lavaca Developer Tools",
   "version": "0.0.5",
-  "description": "Adds a Lavaca tab to chrome dev tools that allows you to visualize view hierarchy, inpect models, and view defined routes. This extension also adds a view and model sidebar to the elements panel for quick debugging",
+  "description": "Chrome DevTools extension for debugging Lavaca apps.",
   "icons": {
     "128": "src/img/icon-144x144.png"
   },

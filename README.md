@@ -1,7 +1,7 @@
-lavaca-devtools
+Lavaca DevTools
 ===============
 
-Chrome DevTools extension for debugging Lavaca apps. This extension adds sidebars to the elements tab to inspect Lavaca objects. It also adds a Lavaca pane for analysing view hierarchy and inspecting models. 
+Chrome DevTools extension for debugging Lavaca apps. Adds a Lavaca tab to chrome dev tools that allows you to visualize view hierarchy, inspect models, and view defined routes. This extension also adds a view and model sidebar to the elements panel for quick debugging.
 
 Installation
 
@@ -14,15 +14,15 @@ Installation
 - Close and re-open developer tools if it's already open
 
 ## Panel
-![View Panel](https://raw.github.com/georgehenderson/lavaca-devtools/master/src/img/panel-view.png)
 Visualize your application's view heirarchy and inspect the models associated with the rendered views.
+![View Panel](https://raw.github.com/georgehenderson/lavaca-devtools/master/src/img/panel-view.png)
 
-![Routes Panel](https://raw.github.com/georgehenderson/lavaca-devtools/master/src/img/panel-routes.png)
 View the data associated with the defined routes for your application. Including the pattern, controller type, controller action, and additional parameters.
+![Routes Panel](https://raw.github.com/georgehenderson/lavaca-devtools/master/src/img/panel-routes.png)
 
 ## Sidebar
-![Sidebar](https://raw.github.com/georgehenderson/lavaca-devtools/master/src/img/sidebar.png)
 Exposes the current view and model in the selected elements scope. Defauts to the view on the highest layer.
+![Sidebar](https://raw.github.com/georgehenderson/lavaca-devtools/master/src/img/sidebar.png)
 
 ## Console
 Exposes two variables to the console
