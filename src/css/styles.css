@@ -77,54 +77,103 @@ h1 {
   padding-left: 8px;
 }
 .view-item {
-  padding: 5px 5px;
-  background-color: #f5f5f5;
+  padding: 0px;
+  background-color: #f5f5f5; 
+}
+.view-tree-container .selected {
+  color: #428bca;
+}
+.view-item.selected div {
+  color: #333333;
+} 
+.view-item.selected > div {
+  color: #428bca;
+}
+.view-item div {
+  margin-left: 10px;
+  padding: 5px 0 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: bold;
 }
 .no-lavaca {
   text-align: center;
   margin-top: 16px;
   font-size: 12px
 }
+.wrapper {
+  padding: 0 16px;
+}
+form.options {
+  padding: 0;
+}
 .string { color: green; }
 .number { color: darkorange; }
 .boolean { color: blue; }
 .null { color: magenta; }
 .key { color: red; }
-
 [data-distance="0"] {
-  font-weight: bold;
+  margin-bottom: 15px;
+  padding: 5px 0px 5px;
+  background-color: #f5f5f5;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+}
+:not([data-distance="0"]) > div {
+  font-weight: normal;
 }
 [data-distance="1"] {
-  margin-left: 15px;
   background-color: #e5e5e5;
 }
+[data-distance="1"]:not(:only-child) {
+  border: 1px solid #d7d7d7;
+  border-right: 0;
+}
+[data-distance="1"]:not(:last-child) {
+  border-bottom: 0;
+}
 [data-distance="2"] {
-  margin-left: 30px;
   background-color: #d7d7d7;
 }
+[data-distance="2"]:not(:only-child) {
+  border: 1px solid #cacaca;
+  border-right: 0;
+}
+[data-distance="2"]:not(:last-child) {
+  border-bottom: 0;
+}
 [data-distance="3"] {
-  margin-left: 45px;
   background-color: #cacaca;
+  border: 1px solid #bdbdbd;
+  border-right: 0;
+}
+[data-distance="3"]:not(:only-child) {
+  border: 1px solid #bdbdbd;
+  border-right: 0;
+}
+[data-distance="3"]:not(:last-child) {
+  border-bottom: 0;
 }
 [data-distance="4"] {
-  margin-left: 60px;
   background-color: #bdbdbd;
+  border: 1px solid #acacac;
+  border-right: 0;
+}
+[data-distance="4"]:not(:only-child) {
+  border: 1px solid #acacac;
+  border-right: 0;
+}
+[data-distance="4"]:not(:last-child) {
+  border-bottom: 0;
 }
 [data-distance="5"] {
-  margin-left: 75px;
+  background-color: #acacac;
 }
-[data-distance="6"] {
-  margin-left: 90px;
+[data-distance="5"]:not(:only-child) {
+  border: 1px solid #9b9b9b;
+  border-right: 0;
 }
-[data-distance="7"] {
-  margin-left: 105px;
-}
-[data-distance="8"] {
-  margin-left: 120px;
-}
-[data-distance="9"] {
-  margin-left: 135px;
-}
-[data-distance="10"] {
-  margin-left: 150px;
+[data-distance="5"]:not(:last-child) {
+  border-bottom: 0;
 }

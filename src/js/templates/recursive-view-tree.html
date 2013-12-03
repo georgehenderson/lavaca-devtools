@@ -1,0 +1,10 @@
+{#name}
+  <div class="view-item" data-distance="{depth}">
+    <div class="type" id="{id}">{type}</div>
+    {?children}
+      {#children}
+        {>"templates/recursive-view-tree" /}
+      {/children}
+    {/children}
+  </div>
+{/name}

@@ -41,6 +41,34 @@
     return debounced;
   };
 
+  var isRequire = function() {
+    if (window.require) {
+      return true;
+    } 
+  };
+
+  var getModule = function(path) {
+    var module;
+    if (isRequire() && require.defined && require.defined(path)) {
+      module = require(path);
+    } else if (window[namespace] && window[namespace][path]) {
+      module = window[namespace][path];
+    }
+    return module;
+  };
+
+  var getModuleName = function(module) {
+    var moduleMap = isRequire() ? require.s.contexts._.defined : window[namespace],
+        name;
+    Object.keys(moduleMap).some(function(key) {
+      if (moduleMap[key] === module || moduleMap[key] === module.constructor) {
+        name = key;
+        return true;
+      }
+    });
+    return name;
+  };
+
   var getViewTree = function() {
     var views = [];
     $('[data-view-id]').each(function(i, el) {
@@ -50,7 +78,7 @@
           id: view.id,
           model: (view.model && typeof view.model.toObject === 'function') ? view.model.toObject() : view.model,
           template: view.template,
-          type: view.constructor.name || 'View',
+          type: getModuleName(view) || 'View',
           parentView: view.parentView ? view.parentView.id : null
         });
       }
@@ -63,6 +91,20 @@
       views: getViewTree()
     };
     sendMessage(action, obj);
+  };
+
+  var getRoutes = function() {
+    var router = getModule('lavaca/mvc/Router'),
+        routes = router.routes.map(function(route) {
+          var controllerType = getModuleName(route.TController);
+          return {
+            action: route.action,
+            params: route.params,
+            pattern: route.pattern,
+            TController: controllerType
+          };
+        });
+    sendMessage('routes', routes);
   };
 
   var sendMessage = function(action, message) {
@@ -83,34 +125,39 @@
   };
 
   var init = function() {
-    console.log('[Lavaca Dev Tools] Started');
     sendMessage('activatePanel', true);
-    var View;
-    if (namespace && window[namespace]['lavaca/mvc/View']) {
-      View = window[namespace]['lavaca/mvc/View'];
-    } else if (require && require.defined && require.defined('lavaca/mvc/View')) {
-      View = require('lavaca/mvc/View');
-    }
-    var renderPageView = View.prototype.renderPageView,
+    var View = getModule('lavaca/mvc/View'),
+        renderPageView = View.prototype.renderPageView,
         render = View.prototype.render,
         redraw = View.prototype.redraw,
-        debouncedSendTree = debounce(sendTree, 1000);
+        enter = View.prototype.enter,
+        exit = View.prototype.exit,
+        debouncedSendTree = debounce(sendTree, 0);
     View.prototype.renderPageView = function() {
       return renderPageView.apply(this, arguments).then(function() {
-        debouncedSendTree('getViews');
+        sendTree('getViews');
       });
     };
     View.prototype.render = function() {
       return render.apply(this, arguments).then(function() {
-        debouncedSendTree('getViews');
+        sendTree('getViews');
       });
     };
     View.prototype.redraw = function() {
       return redraw.apply(this, arguments).then(function() {
-        debouncedSendTree('getViews');
+        sendTree('getViews');
       });
     };
-
+    View.prototype.enter = function() {
+      return enter.apply(this, arguments).then(function() {
+        sendTree('getViews');
+      });
+    };
+    View.prototype.exit = function() {
+      return exit.apply(this, arguments).then(function() {
+        sendTree('getViews');
+      });
+    };
   };
 
   window.addEventListener('message', function(event) {
@@ -120,7 +167,13 @@
       message = data.message;
     }
     if (data.from === 'content-script') {
-      if (message.action === 'isPanelActive') {
+      if (message.action === 'init') {
+        if (isLavacaApp()) {
+          init();
+        } else {
+          sendMessage('activatePanel', false);
+        }
+      } else if (message.action === 'isPanelActive') {
         sendMessage('activatePanel', isLavacaApp());
       } else if (message.action === 'getViews') {
         sendTree(message.action);
@@ -131,6 +184,10 @@
         window.location.reload(true);
       } else if (message.action === 'getNamespace') {
         sendMessage('setNamespace', localStorage.getItem('ldt-namespace'));
+      } else if (message.action === 'getRoutes') {
+        getRoutes();
+      } else if (message.action === 'log') {
+        console.log(message.message);
       }
     }
   });

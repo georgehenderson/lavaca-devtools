@@ -2,6 +2,7 @@ define(function(require) {
 
   var View = require('lavaca/mvc/View'),
       stateModel = require('panel/models/StateModel');
+  require('rdust!templates/header');
 
   /**
    * Header view type
@@ -22,7 +23,7 @@ define(function(require) {
      * @property {String} template
      * @default 'templates/header'
      */
-    template: 'header',
+    template: 'templates/header',
     /**
      * A class name added to the view container
      * @property {String} className

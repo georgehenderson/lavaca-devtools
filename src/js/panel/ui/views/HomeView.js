@@ -3,6 +3,8 @@ define(function(require) {
   var debounce = require('mout/function/debounce');
   var $ = require('jquery');
   var port = require('panel/net/port');
+  require('rdust!templates/recursive-view-tree');
+  require('rdust!templates/home');
 
   var HomeView = PageView.extend(function() {
     PageView.apply(this, arguments);
@@ -10,7 +12,7 @@ define(function(require) {
     this.portMessageHandler = this.onPortMessage.bind(this);
     port.onMessage.addListener(this.portMessageHandler);
     this.mapEvent({
-      '.view-item': {
+      '.view-item div': {
         click: this.onClickViewItem.bind(this),
         mouseover: this.onMouseOverItem.bind(this),
         mouseout: this.onMouseOutItem.bind(this)
@@ -20,7 +22,7 @@ define(function(require) {
       }
     });
   }, {
-    template: 'home',
+    template: 'templates/home',
     className: 'home',
     selectModel: function(id) {
       var model = this.model.first({id: id}),
@@ -33,9 +35,8 @@ define(function(require) {
     },
     selectViewItem: function(el) {
       el = $(el);
-      el.addClass('selected')
-        .siblings()
-          .removeClass('selected');
+      this.el.find('.view-tree-container .selected').removeClass('selected');
+      el.addClass('selected');
       this.selectModel(el.attr('id'));
     },
     onPortMessage: function (msg) {
@@ -48,7 +49,7 @@ define(function(require) {
     },
     onModelUpdate: function() {
       this.redraw().then(function() {
-        this.selectViewItem($('.view-item'));
+        this.selectViewItem($('.view-item div')[0]);
       }.bind(this));
     },
     onClickViewItem: function(e) {
@@ -56,7 +57,7 @@ define(function(require) {
       this.selectViewItem(el);
     },
     onMouseOverItem: function(e) {
-      port.postMessage({action: 'highlightView', viewId: $(e.currentTarget).attr('id')});
+      port.postMessage({action: 'highlightView', viewId: $(e.target).attr('id')});
     },
     onMouseOutItem: function(e) {
       port.postMessage({action: 'highlightView', viewId: null});

@@ -1,6 +1,7 @@
 define(function(require) {
   var View = require('lavaca/mvc/View');
   var port = require('panel/net/port');
+  require('rdust!templates/options');
 
   var OptionsView = View.extend(function() {
     View.apply(this, arguments);
@@ -12,7 +13,7 @@ define(function(require) {
       }
     });
   }, {
-    template: 'options',
+    template: 'templates/options',
     className: 'options',
     onPortMessage: function (msg) {
       if (msg.action === 'setNamespace') {

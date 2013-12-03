@@ -1,10 +1,15 @@
 define(function(require) {
-  var port = chrome.extension.connect({
-    name: 'devtools'
+  var port = chrome.runtime.connect({
+    name: 'panel'
   });
   port.postMessage({
-    name: 'init',
-    tabId: chrome.devtools.inspectedWindow.tabId
+      action: 'init',
+      tabId: chrome.devtools.inspectedWindow.tabId
+  });
+  port.onMessage.addListener(function(msg) {
+    if (msg.action === 'refresh') {
+      window.location.href = chrome.extension.getURL('src/html/panel.html');
+    }
   });
   return port;
 });

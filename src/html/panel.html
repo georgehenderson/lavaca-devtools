@@ -9,40 +9,6 @@
   <body>
     <div id="nav-header"></div>
     <div id="view-root"></div>
-    <script type="text/dust-template" data-name="header">
-      <ul class="nav nav-tabs">
-        <li {@eq key="Views" value="{pageTitle}"}class="active"{/eq}><a href="/">Views</a></li>
-        <li {@eq key="Options" value="{pageTitle}"}class="active"{/eq}><a href="/options">Options</a></li>
-      </ul>
-    </script>
-    <script type="text/dust-template" data-name="options">
-      <form class="options">
-        <h4>App Namespace</h4>
-        <p>Set if debugging an optimized build. Value should match the exports option of amd-dist grunt config.</p>
-        <div class="input-group">
-          <input name="namespace" class="form-control" value="{namespace}">
-          <span class="input-group-btn">
-            <button class="btn btn-default submit" type="button">Submit</button>
-          </span>
-        </div>
-      </form>
-    </script>
-    <script type="text/dust-template" data-name="home">
-    {?active}
-      <div class="view-tree">
-      <h2>View Tree</h2>
-      {#viewTree}
-        <div class="view-item" id="{id}" data-distance="{distance}">{type} <em>{id}</em></div>
-      {/viewTree}
-      </div>
-      <div class="model-inspector">
-        <h2>{selectedModel.model.id} model</h2>
-        <pre>{selectedModel.json|s}</pre>
-      </div>
-    {:else}
-      <p class="no-lavaca">No Lavaca application detected. If in production set your namespace under the Options tab.</p>
-    {/active}
-    </script>
     <script data-main="../js/panel/boot.js" src="../components/requirejs/require.js"></script>
   </body>
 </html>

@@ -35,7 +35,7 @@ require.config({
     'mout': '../components/mout/src',
     'dust': '../components/dustjs-linkedin/dist/dust-full-2.0.4',
     'dust-helpers': '../components/dustjs-linkedin-helpers/dist/dust-helpers-1.1.1',
-    'rdust': '../components/require-dust/require-dust',
+    'rdust': 'panel/misc/rdust-chrome-extension',
     'iScroll': '../components/iscroll/dist/iscroll-lite-min',
     'bootstrap': '../components/bootstrap/dist/js/bootstrap',
     'lavaca': '../components/lavaca/src'

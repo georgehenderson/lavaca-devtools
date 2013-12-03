@@ -7,6 +7,7 @@ define(function(require) {
   return new Application(function() {
     this.router.add({
       '/': [HomeController, 'index'],
+      '/routes': [HomeController, 'routes'],
       '/options': [HomeController, 'options']
     });
     HeaderView.render();

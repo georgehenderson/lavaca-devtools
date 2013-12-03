@@ -1,0 +1,16 @@
+{?active}
+  <div class="view-tree">
+  <h4>View Tree</h4>
+  {#viewTree}
+    <div class="view-tree-container">
+      {>"templates/recursive-view-tree" /}
+    </div>
+  {/viewTree}
+  </div>
+  <div class="model-inspector">
+    <h4>{selectedModel.model.id} model</h4>
+    <pre>{selectedModel.json|s}</pre>
+  </div>
+{:else}
+  <p class="no-lavaca">No Lavaca application detected. If in production set your namespace under the Options tab.</p>
+{/active}

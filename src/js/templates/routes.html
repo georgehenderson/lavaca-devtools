@@ -1,0 +1,21 @@
+<div class="wrapper overflow-scroll">
+  <h4>Defined Routes</h4>
+  <table class="table table-condensed table-striped">
+    <thead>
+      <tr>
+        <th>Pattern</th>
+        <th>Controller Type</th>
+        <th>Action</th>
+        <th>Additional Params</th>
+      </tr>
+    </thead>
+    {#items}
+    <tr>
+      <td>{pattern}</td>
+      <td>{TController}</td>
+      <td>{action}</td>
+      <td>{#params}{@contextDump key="current"/}{/params}</td>
+    </tr>
+    {/items}
+  </table>
+</div>
