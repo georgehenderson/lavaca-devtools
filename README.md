@@ -3,7 +3,10 @@ Lavaca DevTools
 
 Chrome DevTools extension for debugging Lavaca apps. Adds a Lavaca tab to chrome dev tools that allows you to visualize view hierarchy, inspect models, and view defined routes. This extension also adds a view and model sidebar to the elements panel for quick debugging.
 
-Installation
+### Chrome Web Store
+[Download](https://chrome.google.com/webstore/detail/lavaca-developer-tools/kbeolfhnclacoappfhlcnlngdonhhmjb)
+
+Manual Installation
 
 - Clone the repository
 - run `bower install`
@@ -14,7 +17,7 @@ Installation
 - Close and re-open developer tools if it's already open
 
 ## Panel
-Visualize your application's view heirarchy and inspect the models associated with the rendered views.
+Visualize your application's view hierarchy and inspect the models associated with the rendered views.
 ![View Panel](https://raw.github.com/georgehenderson/lavaca-devtools/master/src/img/panel-view.png)
 
 View the data associated with the defined routes for your application. Including the pattern, controller type, controller action, and additional parameters.
